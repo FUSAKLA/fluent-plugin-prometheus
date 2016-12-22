@@ -25,8 +25,9 @@ module Fluent
       @server = WEBrick::HTTPServer.new(
         BindAddress: @bind,
         Port: @port,
-        Logger: WEBrick::Log.new(STDERR, WEBrick::Log::FATAL),
+        Logger: WEBrick::Log.new("/www/szn-fluentd/log/szn-fluentd.log", WEBrick::Log::INFO),
         AccessLog: [],
+        DoNotReverseLookup: true
       )
       @server.mount(@metrics_path, MonitorServlet, self)
       @thread = Thread.new { @server.start }
